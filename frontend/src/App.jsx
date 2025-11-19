@@ -393,7 +393,7 @@ const App = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center w-screen ">
       <div className="w-full max-w-6xl overflow-auto  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {/* Terminal Body */}
         <div
