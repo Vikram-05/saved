@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #111827;
+}
+
+/* Custom scrollbar for terminal */
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 0px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 0px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
