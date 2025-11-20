@@ -26,7 +26,7 @@ const App = () => {
       { type: 'system', text: '                          ** STORE **' },
       { type: 'system', text: '        Anonymous Text & Image Sharing. No Logins. 30d Expiry.' },
       { type: 'system', text: '===================================================================' },
-      { type: 'system', text: 'Type \'help\' and press (Ctrl + enter ) for a list of commands.' },
+      { type: 'system', text: 'Type \'help\'  for a list of commands and and press (Ctrl + enter ) to run or directly click on run button' },
       { type: 'system', text: '' },
     ]);
   }, []);
@@ -338,9 +338,9 @@ const App = () => {
     }
   };
 
-  const handleCommand = (e) => {
+  const handleCommand = (e,button) => {
     // Submit on Ctrl+Enter or Cmd+Enter
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    if (((e.ctrlKey || e.metaKey) && e.key === 'Enter') || (button == "run")) {
       e.preventDefault();
       const cmd = command.trim();
 
@@ -402,7 +402,7 @@ const App = () => {
 
 
   return (
-  <div className="h-screen bg-gray-900  flex items-center justify-center  wrap-anywhere ">
+  <div className="h-[100dvh] bg-gray-900  flex items-center justify-center  wrap-anywhere ">
     <div className="w-full max-w-6xl h-full overflow-hidden">
     
       <div
@@ -425,6 +425,7 @@ const App = () => {
             disabled={isProcessing}
             autoFocus
           />
+          <button className='bg-green-500 rounded-md text-white px-4 py-2' onClick={(e)=> {handleCommand(e,'run')}}>Run</button>
 
           {isProcessing && (
             <span className="text-yellow-400 ml-2 self-center">Processing...</span>
