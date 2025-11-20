@@ -1,7 +1,10 @@
 import DataModel from "../models/Data.model.js";
+import {uploadImage} from "../services/cloudinary.service.js";
 
 export const saveData = async (req, res) => {
-    const { key, data ,type} = req.body;
+    const { key ,type} = req.body;
+    const data = req.body?.data;
+    
     try {
         if (!key) {
             return res.status(400).json({ message: "Key is required" })
@@ -10,10 +13,30 @@ export const saveData = async (req, res) => {
         if (isKeyExists) {
             return res.status(400).json({ message: "Key already exists" })
         }
-        const newData = new DataModel({ key, data,type });
+        
+        
+        if(type == 'file'){
+            if (!req.files) {
+                return res.status(400).json({ message: "No file provided" })
+            }
+            // Use the file path from multer
+            let fileData = req.files[0]?.path;
+            console.log('File data path:', fileData);
+            const uploadResponse = await uploadImage(fileData);
+            if(!uploadResponse){
+                return  res.status(500).json({ message: "Image upload failed" })
+            }
+            fileData = uploadResponse.secure_url || uploadResponse;
+            const newData = new DataModel({ key, data: fileData, type });
+            const response = await newData.save();
+            res.status(200).json({ message: "Data saved successfully", data: response })
+        }
+        
+        const newData = new DataModel({ key, data, type });
         const response = await newData.save();
         res.status(200).json({ message: "Data saved successfully", data: response })
     } catch (error) {
+        console.error("Error in saveData:", error);
         res.status(500).json({ message: "Server Error", error: error.message })
     }
 }

@@ -12,7 +12,7 @@ const DataModel = mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['text', 'image'],
+        enum: ['text', 'file'],
         required: true,
         default: 'text'
     },

@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { okaidia } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "prismjs/themes/prism-okaidia.css";
+import { IoMdClose } from "react-icons/io";
+
 
 const App = () => {
   const [command, setCommand] = useState('');
@@ -11,6 +13,11 @@ const App = () => {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const terminalRef = useRef(null);
+  const [openIng,setOpenImg] = useState(false);
+
+  const handleImg=()=>{
+    setOpenImg(prev=>!prev);
+  }
 
   // Initial output when component mounts
   useEffect(() => {
@@ -86,8 +93,9 @@ const App = () => {
 
     try {
       const formData = new FormData();
-      formData.append('image', imageFile);
+      formData.append('data', imageFile);
       formData.append('key', key);
+      formData.append('type', 'file');
 
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/data/savedata`, formData, {
         headers: {
@@ -131,8 +139,9 @@ const App = () => {
         const resData = response.data.data;
         if (resData.type === 'text') {
           data = { type: 'text', content: resData.data };
-        } else if (resData.type === 'image') {
+        } else if (resData.type === 'file') {
           data = { type: 'image', content: resData.data };
+          setOpenImg(true);
         }
       } else {
         data = null;
@@ -309,8 +318,8 @@ const App = () => {
         }
       case 'retrieved-image':
         return (
-          <div key={index} className="my-2">
-            <img src={item.url} alt="Retrieved" className="max-w-md rounded border-2 border-green-500" />
+          <div onClick={handleImg} key={index} className="my-2 cursor-pointer w-[90vw]">
+            <img src={item.url} alt="Retrieved" className="max-w-md rounded border-2 border-green-500 w-[90vw]" />
           </div>
         );
       case 'prompt':
@@ -393,55 +402,68 @@ const App = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-900 p-4 flex items-center justify-center w-screen ">
-      <div className="w-full max-w-6xl overflow-auto  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-        {/* Terminal Body */}
-        <div
-          ref={terminalRef}
-          className="h-[92vh] p-4 overflow-y-auto font-mono text-sm bg-gray-900  [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        >
-          {/* Output History */}
-          {output.map(renderOutput)}
+  <div className="h-screen bg-gray-900  flex items-center justify-center  wrap-anywhere ">
+    <div className="w-full max-w-6xl h-full overflow-hidden">
+    
+      <div
+        ref={terminalRef}
+        className="h-full p-4 overflow-y-auto font-mono text-sm bg-gray-900 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
+   
+        {output.map(renderOutput)}
 
-          {/* Current Command Line */}
-          <div className="flex items-start mt-2 max-h-[280px]  ">
-            <span className="text-green-400  ">
-              vikram&gt;
-            </span>
+      
+        <div className="flex items-start mt-2 max-h-[280px]">
+          <span className="text-green-400">vikram&gt;</span>
 
-            <textarea
-              value={command}
-              onChange={(e) => setCommand(e.target.value)}
-              onKeyDown={handleCommand}
-              className="bg-transparent text-gray-200 outline-none ml-2 font-mono flex-1 resize-none h-60"
-              placeholder={isProcessing ? "Processing..." : "Type your code... (Ctrl+Enter to submit)"}
-              disabled={isProcessing}
-              autoFocus
-            />
+          <textarea
+            value={command}
+            onChange={(e) => setCommand(e.target.value)}
+            onKeyDown={handleCommand}
+            className="bg-transparent text-gray-200 outline-none ml-2 font-mono flex-1 resize-none h-60"
+            placeholder={isProcessing ? "Processing..." : "Type your code... (Ctrl+Enter to submit)"}
+            disabled={isProcessing}
+            autoFocus
+          />
 
-            {isProcessing && (
-              <span className="text-yellow-400 ml-2 self-center">Processing...</span>
-            )}
-          </div>
-
-        </div>
-
-        {/* Hidden file input */}
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          accept="image/*"
-          className="hidden"
-        />
-
-        {/* Footer */}
-        <div className="bg-gray-800 px-4 py-2 text-center text-gray-400 text-xs font-mono">
-          All data expires in 30 days • No login required • Secure and anonymous
+          {isProcessing && (
+            <span className="text-yellow-400 ml-2 self-center">Processing...</span>
+          )}
         </div>
       </div>
+
+    
+      {openIng && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-md">
+          <IoMdClose
+            className="z-10 absolute top-4 right-4 bg-green-500 p-2 cursor-pointer text-white rounded-full h-10 w-10"
+            onClick={handleImg}
+          />
+          <img
+            src={output.find((item) => item.type === 'retrieved-image')?.url}
+            alt="Retrieved"
+            className="md:w-[800px] w-[90vw] h-[90vh] object-contain rounded border-2 border-green-500"
+          />
+        </div>
+      )}
+
+    
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept="image/*"
+        className="hidden"
+      />
+
+      {/* Footer */}
+      <div className="bg-gray-800 px-4 py-2 text-center text-gray-400 text-xs font-mono absolute bottom-0 m-auto left-0 right-0 ">
+        All data expires in 30 days • No login required • Secure and anonymous *click( Ctrl + Enter ) to run
+      </div>
     </div>
-  );
+  </div>
+);
+
 };
 
 export default App;
