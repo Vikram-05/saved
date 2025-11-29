@@ -12,6 +12,9 @@ No accounts, no authentication — simply save your data and retrieve it later w
 
 ## ✨ Overview
 
+<img width="1920" height="912" alt="screencapture-localhost-5173-2025-11-29-22_44_53" src="https://github.com/user-attachments/assets/4c77fd2a-65dc-4073-b886-35e5d238161f" />
+
+
 saved provides a lightweight, anonymous storage solution for temporary content sharing.  
 Its design focuses on minimalism, privacy, and a smooth terminal-style user experience.
 
