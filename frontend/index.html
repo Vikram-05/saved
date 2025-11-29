@@ -2,12 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/saved.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>stored - Anonymous Text & Image Storage | No Signup Required</title>
+    <meta name="description" content="Store text and images anonymously with stored. No signups, no logins. Get a unique key to access your data. 30-day automatic expiry. Perfect for secure file sharing.">
+    <meta name="keywords" content="anonymous storage, text sharing, image upload, secure file sharing, no signup, temporary storage, key-based access, privacy-focused">
+    <meta name="author" content="stored">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="stored - Anonymous Text & Image Storage">
+    <meta property="og:description" content="Store text and images anonymously. No signups, no logins. 30-day automatic expiry.">
+    <meta property="og:image" content="/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="stored - Anonymous Storage">
+    <meta property="twitter:description" content="Anonymous text and image storage with no signup required">
+    <meta property="twitter:image" content="/twitter-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourstoredapp.com/">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "stored",
+      "description": "Anonymous text and image storage platform with no signup required",
+      "url": "https://yourstoredapp.com/",
+      "applicationCategory": "UtilityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000">
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="EN">
   </head>
   <body>
     <div id="root"></div>
+    
+    <!-- Noscript fallback -->
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: Arial, sans-serif;">
+        <h1>stored - Anonymous Storage</h1>
+        <p>JavaScript is required to run stored. Please enable JavaScript to continue.</p>
+        <p><strong>Features:</strong> Anonymous text/image storage • No signup required • 30-day expiry • Secure sharing</p>
+      </div>
+    </noscript>
+    
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
